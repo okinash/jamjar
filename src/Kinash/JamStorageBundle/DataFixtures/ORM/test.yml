@@ -1,0 +1,20 @@
+Kinash\JamStorageBundle\Entity\User:
+    user1:
+       username: admin
+       password: 123456
+       email: test@test.test
+       salt: <md5()>
+
+Kinash\JamStorageBundle\Entity\Year:
+    Year{2010..2014}:
+        year (unique): <current()>
+
+Kinash\JamStorageBundle\Entity\Type:
+    Type{1..5}:
+        name (unique): <randomElement(array('Cherry','Apple','Gooseberry','Raspberry','Red currant','Strawberry','Cornelian cherry'))>
+
+Kinash\JamStorageBundle\Entity\JamJar:
+    Jam{1..100}:
+        type: @Type*
+        year: @Year*
+        comment: <text(100)>

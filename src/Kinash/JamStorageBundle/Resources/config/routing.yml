@@ -1,0 +1,3 @@
+jam_storage_homepage:
+    path:     /
+    defaults: { _controller: JamStorageBundle:Default:index }

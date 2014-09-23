@@ -1,0 +1,27 @@
+services:
+    sonata.admin.jamjar:
+        class: Kinash\JamStorageBundle\Admin\JamAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Jam" }
+        arguments:
+            - ~
+            - Kinash\JamStorageBundle\Entity\JamJar
+            - ~
+        calls:
+            - [ setCloneService , [@sonata.clone.service]]
+    sonata.admin.type:
+        class: Kinash\JamStorageBundle\Admin\TypeAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Type" }
+        arguments:
+            - ~
+            - Kinash\JamStorageBundle\Entity\Type
+            - ~
+    sonata.admin.year:
+        class: Kinash\JamStorageBundle\Admin\YearAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Year" }
+        arguments:
+            - ~
+            - Kinash\JamStorageBundle\Entity\Year
+            - ~
