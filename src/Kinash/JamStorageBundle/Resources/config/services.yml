@@ -1,10 +1,10 @@
 parameters:
 #    jam_storage.example.class: Kinash\JamStorageBundle\Example
 
+
 services:
-    sonata.clone.service:
+    jamjar.clone.factory:
+        class: Kinash\JamStorageBundle\Classes\CloneFactory
+    jamjar.clone.service:
         class: Kinash\JamStorageBundle\Service\CloneService
-        arguments: [ @doctrine.orm.entity_manager]
-#    jam_storage.example:
-#        class: %jam_storage.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+        arguments: [ @doctrine.orm.entity_manager,@jamjar.clone.factory]

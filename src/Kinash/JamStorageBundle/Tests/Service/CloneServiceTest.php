@@ -4,36 +4,55 @@ use  Kinash\JamStorageBundle\Service\CloneService;
 
 class CloneServiceTest extends \PHPUnit_Framework_TestCase {
     /**
-     * @dataProvider cloneProvider
+     * @dataProvider cloneServiceDataProvider
      */
-    public function testClone($count, $expectedCount)
+    public function testCloneService($count, $expectedCount)
     {
+
+        #mock entity
         $jam = $this->getMock('Kinash\JamStorageBundle\Entity\JamJar');
 
-        $service = $this->getMock('Kinash\JamStorageBundle\Service\CloneService');
-        $service->expects($this->exactly($expectedCount))
-            ->method('duplicate')
-            ->with($jam);
+        #mock clone Factory
+        $cloneFactory = $this->getMock('Kinash\JamStorageBundle\Classes\CloneFactory');
 
+        #mock Entity Manager
         $em = $this->getMockBuilder('\Doctrine\ORM\EntityManager')
             ->disableOriginalConstructor()
             ->getMock();
+
+
+        #Check EntityManager Methods Calls
         $em->expects($this->exactly($expectedCount))
             ->method('persist');
         $em->expects($this->once())
             ->method('flush');
 
+        #Check CloneFactory::cloneObject method calls
+        $cloneFactory->expects($this->exactly($expectedCount))
+            ->method('cloneObject')
+            ->with($jam);
 
-        $jamService = new JamService($em);
-        $jamService->duplicate($jam, $count);
+
+        $cloneService = new CloneService($em, $cloneFactory);
+        $cloneService->duplicate($jam, $count);
 
     }
 
-    public function cloneProvider()
+    /**
+     * data provider for testCloneService
+     * @return array
+     */
+    public function cloneServiceDataProvider()
     {
         return array(
-            array(1, 1),
-            array(10, 10),
+            'success1' => array(
+                'count' => 1,
+                'expectedCount' => 1,
+            ),
+            'success2' => array(
+                'count' => 5,
+                'expectedCount' =>5,
+            ),
         );
     }
 }
